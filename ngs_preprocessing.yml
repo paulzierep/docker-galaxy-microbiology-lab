@@ -8,6 +8,10 @@ tools:
   owner: devteam
   tool_panel_section_label: "Quality Control"
 
+- name: falco
+  owner: devteam
+  tool_panel_section_label: "Quality Control"
+
 - name: multiqc
   owner: iuc
   tool_panel_section_label: "Quality Control"
@@ -16,14 +20,9 @@ tools:
   owner: devteam
   tool_panel_section_label: "Mapping"
 
-- name: data_manager_bowtie2_index_builder
-  owner: devteam
-
-- name: data_manager_fetch_genome_dbkeys_all_fasta
-  owner: devteam
-
-- name: data_manager_bwa_mem_index_builder
-  owner: devteam
+- name: bwa_mem2
+  owner: iuc
+  tool_panel_section_label: "Mapping"
 
 - name: deeptools_bigwig_compare
   owner: bgruening
