@@ -1,12 +1,14 @@
 # Galaxy - NGS preprocessing
 
-FROM quay.io/bgruening/galaxy:25.1.1
+ARG BASE_IMAGE=quay.io/bgruening/galaxy:25.1.1
+FROM ${BASE_IMAGE}
 
-MAINTAINER Björn A. Grüning, bjoern.gruening@gmail.com
+LABEL maintainer="Björn A. Grüning <bjoern.gruening@gmail.com>"
 
 ENV GALAXY_CONFIG_BRAND NGS-preprocessing
 
 # Install tools
-COPY ngs_preprocessing.yml $GALAXY_ROOT/tools.yaml
+ARG TOOL_FILE=ngs_preprocessing.yml
+COPY ${TOOL_FILE} $GALAXY_ROOT/tools.yaml
 
 RUN install-tools $GALAXY_ROOT/tools.yaml
