@@ -9,7 +9,7 @@ tools:
   tool_panel_section_label: "Quality Control"
 
 - name: falco
-  owner: devteam
+  owner: iuc
   tool_panel_section_label: "Quality Control"
 
 - name: multiqc
