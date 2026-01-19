@@ -15,25 +15,26 @@ Galaxy Docker repository for the Microbiology Lab
 
 To build:
 
-```
+```bash
 docker build -t galaxy:microbiology .
+docker build --no-cache -t galaxy:microbiology . #if static stuff is changed
 ```
 
 To launch:
 
-```
+```bash
 docker run --rm -i -t --privileged -p 8080:80 galaxy:microbiology
 ```
 
 For persistent data storage:
 
-```
+```bash
 docker run --rm -i -t --privileged -p 8080:80 -v /home/<username>/export.microbiology/:/export galaxy:microbiology
 ```
 
 With IT enabled:
 
-```
+```bash
 docker run -d -p 8080:80 -p 8021:21 -p 8800:8800 --privileged -v /home/user/galaxy_storage/:/export/ galaxy:microbiology
 ```
 
