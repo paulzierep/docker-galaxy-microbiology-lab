@@ -66,12 +66,13 @@ You can file an [github issue](https://github.com/paulzierep/docker-galaxy-micro
 ## Get local mirror of lab page
 
 ```bash
-# create static dump of the lab
-chmod +x dump_static_lab.sh
-./dump_static_lab.sh
+# create static dump of the lab (does not properly render links)
+#chmod +x dump_static_lab.sh
+#./dump_static_lab.sh
 
 # get all tools from codex
 wget https://raw.githubusercontent.com/galaxyproject/galaxy_codex/refs/heads/main/communities/microgalaxy/lab/tools/all/Local_Galaxy.yaml
+mv Local_Galaxy.yaml local_tools.yml
 
 # set tool install to no deps, tools will be installed upon execution
 sed -i \

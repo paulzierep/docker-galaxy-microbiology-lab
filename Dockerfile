@@ -16,3 +16,6 @@ ARG TOOL_FILE=local_tools.yml
 COPY ${TOOL_FILE} $GALAXY_ROOT_DIR/tools.yaml
 
 RUN install-tools $GALAXY_ROOT_DIR/tools.yaml
+
+# make cvmfs always available
+ENV GALAXY_CONFIG_tool_data_table_config_path=/cvmfs/data.galaxyproject.org/managed/location/tool_data_table_conf.xml,/cvmfs/data.galaxyproject.org/byhand/location/tool_data_table_conf.xml
