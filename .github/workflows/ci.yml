@@ -19,6 +19,7 @@ env:
   IMAGE_REGISTRY: quay.io
   IMAGE_REPOSITORY: bgruening/docker-galaxy-microbiology-lab
   GALAXY_BASE_IMAGE: quay.io/bgruening/galaxy:25.1.1
+  TOOL_FILE: local_tools.yml
 
 jobs:
   build:
@@ -36,7 +37,7 @@ jobs:
           tags: ci-${{ github.sha }}
           base-image: ${{ env.GALAXY_BASE_IMAGE }}
           push: false
-          tool-file: ''
+          tool-file: ${{ env.TOOL_FILE }}
 
   release:
     if: github.event_name == 'release'
@@ -59,3 +60,4 @@ jobs:
           tags: |
             ${{ github.event.release.tag_name }}
             latest
+          tool-file: ${{ env.TOOL_FILE }}
