@@ -80,7 +80,7 @@ The docker MGL installs all tools from: https://github.com/galaxyproject/galaxy_
 But the locally installed tools do not include the dependencies to keep to image small.
 On first tool run, a singularity container of the tool will be installed.
 
-### CFVMS
+### CVFMS
 
 The image contains the full CVFMS reference data. But not locally, since these are multible TBs.
 So like tools, the reference data will be downloaded on the first execution.
