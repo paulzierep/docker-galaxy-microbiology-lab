@@ -40,8 +40,11 @@ docker run --rm -i -t --privileged -p 8080:80 -v ~/export.microbiology/:/export 
 docker run -p 8080:80 -p 8021:21 -p 4002:4002 --privileged -v ~/export.microbiology/:/export/ quay.io/galaxy/docker-galaxy-microbiology-lab
 ```
 
+# Customize the MGL
+
 You can customize the MGL by installing tools and databases via the admin view.
 The Galaxy Admin User has the username ``admin`` and the password ``password``.
+Make sure to run the docker container with persistent data storage to keep your changes.
 
 # Support
 
@@ -96,6 +99,6 @@ cd bin
 ```bash
 docker build -t galaxy:microbiology
 docker build --no-cache -t galaxy:microbiology #if static is changed
-rm -r ~/export.microbiology/ #remove the volume after new build to load new tools
+sudo rm -r ~/export.microbiology/ #remove the volume after new build to load new tools
 docker run --rm -i -t --privileged -p 8080:80 -v ~/export.microbiology/:/export galaxy:microbiology
 ```
