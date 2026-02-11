@@ -17,6 +17,9 @@ Galaxy Docker repository for the Microbiology Lab
 docker run --rm -i -t --privileged -p 8080:80 -v ~/export.microbiology/:/export quay.io/galaxy/docker-galaxy-microbiology-lab
 ```
 
+**Note:** If you want to host the lab on any other domain, you can set the Docker environment variable `-e LAB_DOMAIN=http://127.0.0.1:8080` when running the container.
+
+
 # Usage options
 
 ## To launch
@@ -61,18 +64,11 @@ You can file an [github issue](https://github.com/usegalaxy-eu/docker-galaxy-mic
 
 ### Middle view
 
-This docker instance uses the welcome page rendered via:
-`https://labs.usegalaxy.org.au/?content_root=https://github.com/paulzierep/docker-galaxy-microbiology-lab/blob/main/lab/usegalaxy.lhttps://github.com/usegalaxy-au/galaxy-labs-engine/issues/68ocal.yml&cache=false`.
+This docker instance uses a local dump of the welcome page rendered via:
+`https://labs.usegalaxy.org.au/?content_root=https://github.com/galaxyproject/galaxy_codex/blob/main/communities/microgalaxy/lab/usegalaxy.eu.yml&cache=false`.
 This lab page creates a MGL view with links pointing to `http://127.0.0.1:8080` which is the default 
-localhost and IP for the docker instance. At the moment changing the domain cannot be done with a docker env since the MGL is created by the [galaxy-labs-engine](https://github.com/usegalaxy-au/galaxy-labs-engine).
-
-If you want to host the MGL at a different domain you need to:
-* Fork this repository
-* Change the link in lab/usegalaxy.local.yml.
-* Change the link static/welcome.html
-* Build the docker image locally
-
-A docker env to be set for a local dump of the view would be preferred: https://github.com/usegalaxy-au/galaxy-labs-engine/issues/68 (WIP).
+localhost and IP for the docker instance. 
+It can be changed on runtime using `-e LAB_DOMAIN=http://other.domain.com`.
 
 ### Tools
 
@@ -85,39 +81,21 @@ On first tool run, a singularity container of the tool will be installed.
 The image contains the full CVFMS reference data. But not locally, since these are multible TBs.
 So like tools, the reference data will be downloaded on the first execution.
 
-## Update the container
+# Update the container
+
+## Run script to load latest tools and welcome page dump
 
 ```bash
-# create static dump of the lab (does not properly render links)
-#chmod +x dump_static_lab.sh
-#./dump_static_lab.sh
-
-# get all tools from codex
-wget https://raw.githubusercontent.com/galaxyproject/galaxy_codex/refs/heads/main/communities/microgalaxy/lab/tools/all/Local_Galaxy.yaml
-mv Local_Galaxy.yaml local_tools.yml
-
-# set tool install to no deps, tools will be installed upon execution
-sed -i \
-  -e 's/^install_repository_dependencies: true$/install_repository_dependencies: false/' \
-  -e 's/^install_resolver_dependencies: true$/install_resolver_dependencies: false/' \
-  -e 's/^install_tool_dependencies: true$/install_tool_dependencies: false/' \
-  Local_Galaxy.yaml
-
-# remove artic_guppyplex artic_minion since it has doublicated data table which kills Galaxy start up
-awk '
-  /^- name:/ {
-    name = $3
-    skip = (name == "artic_guppyplex" || name == "artic_minion")
-  }
-  !skip
-' local_tools.yml > tools.filtered.yml
-mv tools.filtered.yml local_tools.yml
+chmod +x bin/update_lab.sh
+cd bin
+./update_lab.sh
 ```
 
-## To build
+## Build docker locally
 
 ```bash
 docker build -t galaxy:microbiology
 docker build --no-cache -t galaxy:microbiology #if static is changed
 rm -r ~/export.microbiology/ #remove the volume after new build to load new tools
+docker run --rm -i -t --privileged -p 8080:80 -v ~/export.microbiology/:/export galaxy:microbiology
 ```
