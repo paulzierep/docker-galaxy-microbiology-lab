@@ -78,7 +78,7 @@ On first tool run, a singularity container of the tool will be installed.
 
 ### CVFMS
 
-The image contains the full CVFMS reference data. But not locally, since these are multible TBs.
+The image contains the full CVFMS reference data. But not locally, since these are multiple TBs.
 So like tools, the reference data will be downloaded on the first execution.
 
 # Update the container
