@@ -97,8 +97,8 @@ cd bin
 ## Build docker locally
 
 ```bash
-docker build -t galaxy:microbiology
-docker build --no-cache -t galaxy:microbiology #if static is changed
+docker build -t galaxy:microbiology .
+docker build --no-cache -t galaxy:microbiology . #if static is changed
 sudo rm -r ~/export.microbiology/ #remove the volume after new build to load new tools
-docker run --rm -i -t --privileged -p 8080:80 -v ~/export.microbiology/:/export galaxy:microbiology
+docker run --rm -i -t --privileged -p 8080:80 -v ~/export.microbiology/:/export -e LAB_DOMAIN=http://127.0.0.1:8080 galaxy:microbiology
 ```
